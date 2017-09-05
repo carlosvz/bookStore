@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json.Serialization;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
@@ -15,6 +16,9 @@ namespace BookStore.API
             var formatter = GlobalConfiguration.Configuration.Formatters;
             formatter.Remove(formatter.XmlFormatter);
 
+            var jsonSettings = formatter.JsonFormatter.SerializerSettings;
+            jsonSettings.Formatting = Newtonsoft.Json.Formatting.Indented;
+            jsonSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
             // Rotas da API da Web
             config.MapHttpAttributeRoutes();
 
