@@ -1,4 +1,8 @@
-﻿using Newtonsoft.Json.Serialization;
+﻿using BookStore.Data.Repositories;
+using BookStore.Domain.Contracts;
+using BookStore.Util.Helpers;
+using Microsoft.Practices.Unity;
+using Newtonsoft.Json.Serialization;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +16,12 @@ namespace BookStore.API
         {
             // Serviços e configuração da API da Web
 
+            //DI
+            var container = new UnityContainer();
+            container.RegisterType<IBookRepository, BookRepository>(new HierarchicalLifetimeManager());
+            container.RegisterType<IAuthorRepository, AuthorRepository>(new HierarchicalLifetimeManager());
+            config.DependencyResolver = new UnityResolver(container);
+            
             //Remove o xml formatter
             var formatter = GlobalConfiguration.Configuration.Formatters;
             formatter.Remove(formatter.XmlFormatter);

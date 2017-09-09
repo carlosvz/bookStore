@@ -10,10 +10,12 @@ using System.Web.Http;
 
 namespace BookStore.API.Controllers
 {
+    [RoutePrefix("api/public/v1")]
     public class BookController : ApiController
     {
         private IBookRepository _repository = new BookRepository();
 
+        [Route("livros")]
         public HttpResponseMessage Get()
         {
             var response = new HttpResponseMessage();
