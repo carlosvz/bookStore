@@ -24,12 +24,15 @@ namespace BookStore.Util.Helpers
 
         public IDependencyScope BeginScope()
         {
-            throw new NotImplementedException();
+            var child = container.CreateChildContainer();
+            return new UnityResolver(child);
+
         }
 
         public void Dispose()
         {
-            throw new NotImplementedException();
+            container.Dispose();
+
         }
 
         public object GetService(Type serviceType)
@@ -47,7 +50,14 @@ namespace BookStore.Util.Helpers
 
         public IEnumerable<object> GetServices(Type serviceType)
         {
-            throw new NotImplementedException();
+            try
+            {
+                return container.ResolveAll(serviceType);
+            }
+            catch (ResolutionFailedException)
+            {
+                return new List<object>();
+            }
         }
     }
 }

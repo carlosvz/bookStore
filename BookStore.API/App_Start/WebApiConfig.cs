@@ -24,11 +24,12 @@ namespace BookStore.API
             
             //Remove o xml formatter
             var formatter = GlobalConfiguration.Configuration.Formatters;
-            formatter.Remove(formatter.XmlFormatter);
+            //formatter.Remove(formatter.XmlFormatter);
 
             var jsonSettings = formatter.JsonFormatter.SerializerSettings;
             jsonSettings.Formatting = Newtonsoft.Json.Formatting.Indented;
             jsonSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+            formatter.JsonFormatter.SerializerSettings.PreserveReferencesHandling = Newtonsoft.Json.PreserveReferencesHandling.Objects;
             // Rotas da API da Web
             config.MapHttpAttributeRoutes();
 

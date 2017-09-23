@@ -11,7 +11,11 @@ namespace BookStore.Util.Attributes
 {
     public class DeflateCompressionAttribute :ActionFilterAttribute
     {
-
+        /// <summary>
+        /// Comprimi o Body da requisição. Reduzindo drasticamente seu tamanho.
+        /// É usado como atributo [DeflateCompression]
+        /// </summary>
+        /// <param name="actContext"></param>
         public override void OnActionExecuted(HttpActionExecutedContext actContext)
         {
             var content = actContext.Response.Content;

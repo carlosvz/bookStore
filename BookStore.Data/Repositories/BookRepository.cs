@@ -12,11 +12,31 @@ namespace BookStore.Data.Repositories
 {
    public class BookRepository : IBookRepository
     {
-        private BookStoreDataContext _db;
+         private BookStoreDataContext _db;
 
         public BookRepository()
         {
-            _db = new BookStoreDataContext();
+            this._db = new BookStoreDataContext();
+        }
+
+        public List<Book> Get(int skip = 0, int take = 25)
+        {
+            return _db.Books.OrderBy(x => x.Title).Skip(skip).Take(take).ToList();
+        }
+
+        public Book Get(int id)
+        {
+            return _db.Books.Find(id);
+        }
+
+        public List<Book> GetWithAuthors(int skip = 0, int take = 25)
+        {
+            return _db.Books.Include(x => x.Authors).OrderBy(x => x.Title).Skip(skip).Take(take).ToList();
+        }
+
+        public Book GetWithAuthors(int id)
+        {
+            return _db.Books.Include(x => x.Authors).Where(x => x.Id == id).FirstOrDefault();
         }
 
         public void Create(Book entity)
@@ -30,6 +50,7 @@ namespace BookStore.Data.Repositories
             _db.Entry<Book>(entity).State = EntityState.Modified;
             _db.SaveChanges();
         }
+
         public void Delete(int id)
         {
             _db.Books.Remove(_db.Books.Find(id));
@@ -39,26 +60,6 @@ namespace BookStore.Data.Repositories
         public void Dispose()
         {
             _db.Dispose();
-        }
-
-        public List<Book> Get(int skip = 0, int take = 25)
-        {
-            return _db.Books.OrderBy(x => x.Title).Skip(skip).Take(take).ToList();
-        }
-
-        public Book Get(int id)
-        {
-            return _db.Books.Find(id);
-        }
-
-        public Book GetWhithAuthors(int id)
-        {
-            return _db.Books.Include(x => x.Authors).Where(x => x.Id == id).FirstOrDefault();
-        }
-
-        public List<Book> GetWithAuthors(int skip = 0, int take = 25)
-        {
-            return _db.Books.Include(x => x.Authors).OrderBy(x => x.Title).Skip(skip).Take(take).ToList();
         }
     }
 }
