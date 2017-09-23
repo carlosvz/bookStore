@@ -1,6 +1,6 @@
 ﻿namespace BookStore.Domain.Contracts
 {
-    public interface IAuthorRepository : IBookRepository<Author>
+    public interface IAuthorRepository : IRepository<Author>
     {
     }
 }

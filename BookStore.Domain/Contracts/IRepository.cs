@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace BookStore.Domain.Contracts
 {
-    public interface IBookRepository<T> : IDisposable
+    public interface IRepository<T> : IDisposable
     {
         List<T> Get(int skip = 0, int take = 25);
         T Get(int id);
